@@ -1,0 +1,28 @@
+{
+    "name": "nbj/collections",
+    "description": "Collection library",
+    "keywords": ["collection","array"],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nikolaj Boel Jensen",
+            "email": "nbj@cego.dk"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "*",
+        "friendsofphp/php-cs-fixer": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Nbj\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    }
+}
