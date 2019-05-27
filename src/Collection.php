@@ -278,7 +278,8 @@ class Collection implements ArrayAccess, Countable
      *
      * @return Collection
      */
-    public function flatten() {
+    public function flatten()
+    {
         $flattenedItems = new Collection;
         $items = new RecursiveIteratorIterator(new RecursiveArrayIterator($this->items));
 
@@ -287,6 +288,24 @@ class Collection implements ArrayAccess, Countable
         }
 
         return $flattenedItems;
+    }
+
+    /**
+     * Implodes all non objecty items of the collection
+     *
+     * @param $glue
+     *
+     * @return string
+     *
+     * @throws ReflectionException
+     */
+    public function implode($glue = "")
+    {
+        $items = $this->filter(function ($item) {
+            return is_numeric($item) || is_string($item);
+        })->toArray();
+
+        return implode($glue, $items);
     }
 
     /**

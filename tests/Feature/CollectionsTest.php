@@ -518,4 +518,18 @@ class CollectionsTest extends TestCase
             'jacob@example.com'
         ], $collection->flatten()->toArray());
     }
+
+    /** @test */
+    public function it_can_be_imploded() {
+        $collection = new Collection(['a', 'b', 'c', 'd', 'e', 'f', 'g']);
+
+        $this->assertEquals('abcdefg', $collection->implode());
+    }
+
+    /** @test */
+    public function it_filters_away_all_objecty_items_of_a_collection_when_imploding() {
+        $collection = new Collection(['a', 'b', 'c', new stdClass(), ['hey', 'an', 'array'], 'd', 'e', 'f', 'g']);
+
+        $this->assertEquals("a\nb\nc\nd\ne\nf\ng", $collection->implode("\n"));
+    }
 }
