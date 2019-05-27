@@ -1,6 +1,7 @@
 <?php
 namespace Tests;
 
+use stdClass;
 use Countable;
 use Exception;
 use ArrayAccess;
@@ -457,7 +458,7 @@ class CollectionsTest extends TestCase
     }
 
     /** @test */
-    public function it_can_summarize_a_collection_of_items_using_a_specific_field()
+    public function it_can_summarize_a_collection_of_items_using_a_specific_field_in_array_form()
     {
         $collection = new Collection([
             [
@@ -475,5 +476,46 @@ class CollectionsTest extends TestCase
         ]);
 
         $this->assertEquals(100, $collection->sum('age'));
+    }
+
+    /** @test */
+    public function it_can_summarize_a_collection_of_items_using_a_specific_field_in_object_form()
+    {
+        $personA = new stdClass;
+        $personA->name = 'john';
+        $personA->age = 30;
+
+        $personB = new stdClass;
+        $personB->name = 'jane';
+        $personB->age = 26;
+
+        $personC = new stdClass;
+        $personC->name = 'jacob';
+        $personC->age = 44;
+
+        $collection = new Collection([$personA, $personB, $personC]);
+
+        $this->assertEquals(100, $collection->sum('age'));
+    }
+
+    /** @test */
+    public function it_can_flatten_arrays() {
+        $collection = new Collection([
+            ['john@example.com'],
+            ['jane@example.com'],
+            ['jacob@example.com'],
+        ]);
+
+        $this->assertEquals([
+            ['john@example.com'],
+            ['jane@example.com'],
+            ['jacob@example.com']
+        ], $collection->toArray());
+
+        $this->assertEquals([
+            'john@example.com',
+            'jane@example.com',
+            'jacob@example.com'
+        ], $collection->flatten()->toArray());
     }
 }

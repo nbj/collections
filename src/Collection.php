@@ -7,6 +7,8 @@ use ArrayAccess;
 use RuntimeException;
 use ReflectionFunction;
 use ReflectionException;
+use RecursiveArrayIterator;
+use RecursiveIteratorIterator;
 
 class Collection implements ArrayAccess, Countable
 {
@@ -269,6 +271,22 @@ class Collection implements ArrayAccess, Countable
 
             return $carry;
         }, 0);
+    }
+
+    /**
+     * Flattens a Collection recursively
+     *
+     * @return Collection
+     */
+    public function flatten() {
+        $flattenedItems = new Collection;
+        $items = new RecursiveIteratorIterator(new RecursiveArrayIterator($this->items));
+
+        foreach ($items as $item) {
+            $flattenedItems->push($item);
+        }
+
+        return $flattenedItems;
     }
 
     /**
