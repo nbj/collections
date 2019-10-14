@@ -5,6 +5,7 @@ use stdClass;
 use Countable;
 use Exception;
 use ArrayAccess;
+use ArrayIterator;
 use Nbj\Collection;
 use RuntimeException;
 use PHPUnit\Framework\TestCase;
@@ -499,7 +500,17 @@ class CollectionsTest extends TestCase
     }
 
     /** @test */
-    public function it_can_flatten_arrays() {
+    public function it_can_reverse_it_self()
+    {
+        $collection = new Collection(['a', 'b', 'c']);
+
+        $this->assertEquals('a,b,c', $collection->implode(','));
+        $this->assertEquals('c,b,a', $collection->reverse()->implode(','));
+    }
+
+    /** @test */
+    public function it_can_flatten_arrays()
+    {
         $collection = new Collection([
             ['john@example.com'],
             ['jane@example.com'],
@@ -520,16 +531,26 @@ class CollectionsTest extends TestCase
     }
 
     /** @test */
-    public function it_can_be_imploded() {
+    public function it_can_be_imploded()
+    {
         $collection = new Collection(['a', 'b', 'c', 'd', 'e', 'f', 'g']);
 
         $this->assertEquals('abcdefg', $collection->implode());
     }
 
     /** @test */
-    public function it_filters_away_all_objecty_items_of_a_collection_when_imploding() {
+    public function it_filters_away_all_objecty_items_of_a_collection_when_imploding()
+    {
         $collection = new Collection(['a', 'b', 'c', new stdClass(), ['hey', 'an', 'array'], 'd', 'e', 'f', 'g']);
 
         $this->assertEquals("a\nb\nc\nd\ne\nf\ng", $collection->implode("\n"));
+    }
+
+    /** @test */
+    public function it_is_iterable()
+    {
+        $collection = new Collection(['a', 'b', 'c', 'd', 'e', 'f', 'g']);
+
+        $this->assertInstanceOf(ArrayIterator::class, $collection->getIterator());
     }
 }

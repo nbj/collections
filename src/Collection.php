@@ -4,13 +4,15 @@ namespace Nbj;
 
 use Countable;
 use ArrayAccess;
+use ArrayIterator;
 use RuntimeException;
+use IteratorAggregate;
 use ReflectionFunction;
 use ReflectionException;
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
 
-class Collection implements ArrayAccess, Countable
+class Collection implements ArrayAccess, Countable, IteratorAggregate
 {
     /**
      * Holds all the items in the collection
@@ -274,6 +276,16 @@ class Collection implements ArrayAccess, Countable
     }
 
     /**
+     * Reverses the collection
+     *
+     * @return static
+     */
+    public function reverse()
+    {
+        return new static(array_reverse($this->items, true));
+    }
+
+    /**
      * Flattens a Collection recursively
      *
      * @return Collection
@@ -424,5 +436,15 @@ class Collection implements ArrayAccess, Countable
     public function count()
     {
         return count($this->items);
+    }
+
+    /**
+     * Get an iterator for the items.
+     *
+     * @return ArrayIterator
+     */
+    public function getIterator()
+    {
+        return new ArrayIterator($this->items);
     }
 }
