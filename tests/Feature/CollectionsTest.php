@@ -79,7 +79,7 @@ class CollectionsTest extends TestCase
         $collection = new Collection([
             'some_item',
             'some_other_item',
-            'some_third_item'
+            'some_third_item',
         ]);
 
         $this->assertCount(3, $collection);
@@ -139,7 +139,7 @@ class CollectionsTest extends TestCase
     {
         $collection = new Collection([
             'name' => 'john',
-            'age'  => 35
+            'age'  => 35,
         ]);
 
         $json = $collection->toJson();
@@ -227,7 +227,7 @@ class CollectionsTest extends TestCase
             $haystack = [
                 'some_item',
                 'some_other_item',
-                'some_third_item'
+                'some_third_item',
             ];
 
             $this->assertTrue(in_array($item, $haystack));
@@ -243,7 +243,7 @@ class CollectionsTest extends TestCase
         $collection = new Collection([
             'name' => 'john',
             'age'  => 35,
-            'sex'  => 'male'
+            'sex'  => 'male',
         ]);
 
         $collection->each(function ($value, $key) use ($collection) {
@@ -284,7 +284,7 @@ class CollectionsTest extends TestCase
         $collection = new Collection([
             'some_item',
             'some_other_item',
-            'some_third_item'
+            'some_third_item',
         ]);
 
         $newCollection = $collection->filter(function ($item) {
@@ -303,7 +303,7 @@ class CollectionsTest extends TestCase
         $collection = new Collection([
             'some_item',
             'some_other_item',
-            'some_third_item'
+            'some_third_item',
         ]);
 
         $newCollection = $collection->reject(function ($item) {
@@ -325,7 +325,7 @@ class CollectionsTest extends TestCase
         $collection = new Collection([
             'name' => 'john',
             'age'  => 35,
-            'sex'  => 'male'
+            'sex'  => 'male',
         ]);
 
         $newCollection = $collection->filter(function ($value, $key) {
@@ -345,7 +345,7 @@ class CollectionsTest extends TestCase
         $collection = new Collection([
             'name' => 'john',
             'age'  => 35,
-            'sex'  => 'male'
+            'sex'  => 'male',
         ]);
 
         $newCollection = $collection->reject(function ($value, $key) {
@@ -367,7 +367,7 @@ class CollectionsTest extends TestCase
         $collection = new Collection([
             'some_item',
             'some_other_item',
-            'some_third_item'
+            'some_third_item',
         ]);
 
         try {
@@ -378,7 +378,7 @@ class CollectionsTest extends TestCase
                 $notRelevant = [
                     $value,
                     $key,
-                    $thisShouldNotBeHere
+                    $thisShouldNotBeHere,
                 ];
 
                 return $notRelevant;
@@ -395,7 +395,7 @@ class CollectionsTest extends TestCase
         $collection = new Collection([
             'some_item',
             'some_other_item',
-            'some_third_item'
+            'some_third_item',
         ]);
 
         try {
@@ -406,7 +406,7 @@ class CollectionsTest extends TestCase
                 $notRelevant = [
                     $value,
                     $key,
-                    $thisShouldNotBeHere
+                    $thisShouldNotBeHere,
                 ];
 
                 return $notRelevant;
@@ -464,15 +464,15 @@ class CollectionsTest extends TestCase
         $collection = new Collection([
             [
                 'name' => 'john',
-                'age'  => 30
+                'age'  => 30,
             ],
             [
                 'name' => 'jane',
-                'age'  => 26
+                'age'  => 26,
             ],
             [
                 'name' => 'jacob',
-                'age'  => 44
+                'age'  => 44,
             ],
         ]);
 
@@ -520,13 +520,13 @@ class CollectionsTest extends TestCase
         $this->assertEquals([
             ['john@example.com'],
             ['jane@example.com'],
-            ['jacob@example.com']
+            ['jacob@example.com'],
         ], $collection->toArray());
 
         $this->assertEquals([
             'john@example.com',
             'jane@example.com',
-            'jacob@example.com'
+            'jacob@example.com',
         ], $collection->flatten()->toArray());
     }
 

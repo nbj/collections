@@ -9,6 +9,7 @@ use RuntimeException;
 use IteratorAggregate;
 use ReflectionFunction;
 use ReflectionException;
+use ReturnTypeWillChange;
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
 
@@ -40,7 +41,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
      */
     public function __construct($items = [])
     {
-        if (!is_array($items)) {
+        if ( ! is_array($items)) {
             $items = [$items];
         }
 
@@ -113,7 +114,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
      */
     public function isNotEmpty()
     {
-        return !$this->isEmpty();
+        return ! $this->isEmpty();
     }
 
     /**
@@ -167,10 +168,10 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
      *
      * @param callable $callback
      *
-     * @return Collection
-     *
      * @throws ReflectionException
      * @throws RuntimeException
+     *
+     * @return Collection
      */
     public function filter(callable $callback)
     {
@@ -193,10 +194,10 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
      *
      * @param callable $callback
      *
-     * @return Collection
-     *
      * @throws ReflectionException
      * @throws RuntimeException
+     *
+     * @return Collection
      */
     public function reject(callable $callback)
     {
@@ -205,13 +206,13 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
 
         if ($numberOfParameters == 1) {
             return $this->filter(function ($item) use ($callback) {
-                return !$callback($item);
+                return ! $callback($item);
             });
         }
 
         if ($numberOfParameters == 2) {
             return $this->filter(function ($value, $key) use ($callback) {
-                return !$callback($value, $key);
+                return ! $callback($value, $key);
             });
         }
 
@@ -223,9 +224,9 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
      *
      * @param callable $callback
      *
-     * @return bool
-     *
      * @throws ReflectionException
+     *
+     * @return bool
      */
     public function every(callable $callback)
     {
@@ -307,11 +308,11 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
      *
      * @param $glue
      *
-     * @return string
-     *
      * @throws ReflectionException
+     *
+     * @return string
      */
-    public function implode($glue = "")
+    public function implode($glue = '')
     {
         $items = $this->filter(function ($item) {
             return is_numeric($item) || is_string($item);
@@ -359,10 +360,11 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
      *
      * @since 5.0.0
      */
-    public function offsetExists($offset)
-    {
-        return isset($this->items[$offset]);
-    }
+    #[ReturnTypeWillChange]
+ public function offsetExists($offset)
+ {
+     return isset($this->items[$offset]);
+ }
 
     /**
      * Offset to retrieve
@@ -377,10 +379,11 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
      *
      * @since 5.0.0
      */
-    public function offsetGet($offset)
-    {
-        return $this->items[$offset];
-    }
+    #[ReturnTypeWillChange]
+ public function offsetGet($offset)
+ {
+     return $this->items[$offset];
+ }
 
     /**
      * Offset to set
@@ -398,10 +401,11 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
      *
      * @since 5.0.0
      */
-    public function offsetSet($offset, $value)
-    {
-        $this->items[$offset] = $value;
-    }
+    #[ReturnTypeWillChange]
+ public function offsetSet($offset, $value)
+ {
+     $this->items[$offset] = $value;
+ }
 
     /**
      * Offset to unset
@@ -416,10 +420,11 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
      *
      * @since 5.0.0
      */
-    public function offsetUnset($offset)
-    {
-        unset($this->items[$offset]);
-    }
+    #[ReturnTypeWillChange]
+ public function offsetUnset($offset)
+ {
+     unset($this->items[$offset]);
+ }
 
     /**
      * Count elements of an object
@@ -433,18 +438,20 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
      *
      * @since 5.1.0
      */
-    public function count()
-    {
-        return count($this->items);
-    }
+    #[ReturnTypeWillChange]
+ public function count()
+ {
+     return count($this->items);
+ }
 
     /**
      * Get an iterator for the items.
      *
      * @return ArrayIterator
      */
-    public function getIterator()
-    {
-        return new ArrayIterator($this->items);
-    }
+    #[ReturnTypeWillChange]
+ public function getIterator()
+ {
+     return new ArrayIterator($this->items);
+ }
 }
